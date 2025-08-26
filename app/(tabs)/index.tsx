@@ -1,3 +1,4 @@
+import MovieCard from "@/components/MovieCard";
 import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
@@ -12,8 +13,8 @@ export default function Index() {
   data: movies,
   loading: moviesLoading, 
   error: moviesError
-} = useFetch(()=> fetchMovies({
-  query:''}))
+} = useFetch(()=> fetchMovies({query:''}))
+
 
   return (
     <View className="flex-1 bg-primary">
@@ -43,10 +44,20 @@ export default function Index() {
       <Text className="text-lg text-white font-bold mt-5 mb-3">Latest Movies</Text>
 
       <FlatList
-       data={movies}
-       renderItem={({item})=> (
-        <Text>{item.title}</Text>
-       )}
+        data={movies}
+        renderItem={({item})=> (
+                  <MovieCard {...item}/>
+        )}
+        keyExtractor={(item)=>item.id.toString()}
+        numColumns={3}
+        columnWrapperStyle={{
+          justifyContent: 'flex-start',
+          gap:20,
+          paddingRight: 5,
+          marginBottom: 10
+        }}
+        className="mt-2 pb-32"
+        scrollEnabled={false}
        />
       </>
     </View>
